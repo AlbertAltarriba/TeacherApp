@@ -1,0 +1,54 @@
+<header>
+  <app-header></app-header>
+</header>
+
+<div class="container mt-6">
+  <div class="row">
+    <div class="col-12 col-lg-6 mb-5 mb-lg-0 px-5">
+      <img src="assets/images/loginImage.png" alt="login into your account" class="login_img"/>
+    </div>
+    <section aria-labelledby="login-header" class="col-12 col-lg-6 px-5">
+      <h2 id="login-header" class="login__header">Accede a tu cuenta</h2>
+      <form #loginForm="ngForm" (ngSubmit)="getLogin(loginForm)">
+        <article class="d-flex flex-column mt-3">
+          <div class="mb-4">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" class="form-control input" id="email" name="user_email" ngModel placeholder="Introduce tu email"/>
+          </div>
+
+          <div class="mb-4">
+            <label for="password" class="form-label">Contraseña</label>
+            <input type="password" class="form-control input" id="password" name="user_password" ngModel placeholder="Contraseña"/>
+          </div>
+
+          <button class="primary-button mb-4" type="submit">Iniciar sesión</button>
+
+          <p class="login__text">¿No tienes cuenta en TeacherApp? <a class="login__link ms-1" href="/form"> Regístrate aquí</a></p>
+        </article>
+      </form>
+      <div class="btn btn-primary" (click)="superpower()">Give me superpower!</div>
+    </section>
+  </div>
+  
+  <div class="modal fade" id="popUp" data-bs-backdrop="static" aria-labelledby="popUpLabel" aria-hidden="true" data-bs-backdrop="false">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="modal-body__image ps-md-4 me-md-4 mb-3 mb-md-0">
+            <figure>
+              <img src="assets/images/PopUp/PopUpError.png" alt="Imagen de error" />
+            </figure>
+          </div>
+          <div class="modal-body__text">
+            <h2 class="col-12 col-md-6 modal-body__text-title mb-5"> No es posible acceder</h2>
+            <p class="modal-body__text-content mb-4 mb-md-5">El email y/o la contraseña son incorrectos</p>
+            <button type="button" class="primary-button btn-popup-alone" data-bs-dismiss="modal" aria-label="Close">Volver</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,343 @@
+// ************+ APIS YA EN FUNCIONAMIENTO ****************
+// Los 'Authorization:' es el token que se crea en el login, dura una hora y se gaurda en los cookies del cliente
+//    está en la cookie -> req.cookies.token
+// Los programadores del frontend lo podeis leer desde allí y enviarlo en cada llamada que haceis al servidor.
+// El servidor tiene rutas PUBLICAS que no requieren token, y rutas que requieren token y además que seas ADMIN O TEACHER O STUDENT .
+// Durante la primera fase del desarrollo de la parte cliente no está en vigor los token para facilitar la programación.
+// Cuando  ya funcione una ruta desde el cliente, podemos añadir el control de esa ruta usando el token. 
+// En el GET http://localhost:333/api -> guardo los SUBJECTS en los cookies del cliente porque no cambian y se accede sin pedirlo al servidor
+//    está en la cookie -> req.cookies.AppTeachers.Subjects;
+// NOTA para crear la Base de Datos Vacía: ejecutar db/CrearBDAppteacher.sql
+// NOTA para borrar todos los datos: ejecutar db/TruncateTables.sql
+// NOTA insertar algunos datos de prueba para las MATERIAS db/InsertSubjects.sql
+
+
+// 1er PASO: CREAR ADMINISTRADOR CON ESTE API, AUNQUE NO SE CREE DESDE EL NAVEGADOR...
+###
+POST http://localhost:3333/api/users/register
+content-type: application/json
+
+{
+    "user_email": "admin1@gmail.com",
+    "user_password": "admin1",
+    "user_username": "admin1",
+    "user_type": "ADMIN",
+    "user_deleted": "NO"
+
+}
+
+//2º PASO (el PUT): se abre otro formulario con los campos que faltan sólo para el Adminitrador
+// El paso anterior de devuelve el id del administrador que usaras para devolver en el params
+// de este paso. En el body pondremos los datos en los campos introducidos por el usuario.
+###
+
+PUT http://localhost:3333/api/admin/1
+content-type: application/json
+
+{
+    "admin_id": 1,
+    "admin_name": "kk Modif",
+    "admin_zip": "kk",
+    "admin_address": "kk Admin",
+    "admin_phone": "kk",
+    "admin_last_name": "kk",
+    "admin_image": "kk",
+    "admin_id_user":1,
+    "admin_city": "kk",
+    "admin_validate": "NO"
+}
+
+
+###
+PUT http://localhost:3333/api/users/register/admin/1
+content-type: application/json
+
+{
+    "admin_id": 1,
+    "admin_name": "kk Modif",
+    "admin_zip": "kk",
+    "admin_address": "kk Admin",
+    "admin_phone": "kk",
+    "admin_last_name": "kk",
+    "admin_image": "kk",
+    "admin_id_user":1,
+    "admin_city": "kk",
+    "admin_validate": "NO"
+}
+
+// 1er PASO: CREAR UN TEACHER CON ESTE API
+###
+POST http://localhost:3333/api/users/register
+content-type: application/json
+
+{
+    "user_email": "roberto.alonso.gandia@gmail.com",
+    "user_password": "roberto",
+    "user_type": "TEACHER",
+    "user_deleted": "NO"
+}
+
+###
+//2º PASO (el PUT): se abre otro formulario con los campos que faltan sólo para el Adminitrador
+// El paso anterior de devuelve el id del administrador que usaras para devolver en el params
+// de este paso. En el body pondremos los datos en los campos introducidos por el usuario.
+PUT http://localhost:3333/api/users/register/teachers/1
+content-type: application/json
+
+{
+
+    "teach_id":1,
+    "teach_name": "Nombre teacher",
+    "teach_zip": "ZipTeacher",
+    "teach_address": "Direccion teacher",
+    "teach_phone": "telteacher",
+    "teach_last_name": "lastname",
+    "teach_image": "image",
+    "teach_id_user":1,
+    "teach_city": "Ciudadtacher",
+    "teach_price_an_hour":12,
+    "teach_description":"Description of the Teacher",
+    "teach_experience_years":10,
+    "teach_validated": "NO",
+    "teach_id_subject":1
+
+}
+
+// 1er PASO: CREAR STUDENT CON ESTE API
+###
+POST http://localhost:3333/api/users/register
+content-type: application/json
+
+{
+    "user_email": "student1@gmail.com",
+    "user_password": "student1",
+    "user_username": "student1",
+    "user_type": "STUDENT",
+    "user_deleted": "NO"
+}
+//2º PASO (el PUT): se abre otro formulario con los campos que faltan sólo para el Adminitrador
+// El paso anterior de devuelve el id del administrador que usaras para devolver en el params
+// de este paso. En el body pondremos los datos en los campos introducidos por el usuario.
+
+###
+
+GET http://localhost:3333/api/teachers/0/1
+
+###
+
+
+GET http://localhost:3333/api/students/0/1
+
+###
+
+
+GET http://localhost:3333/api/enrollments/0/1
+
+###
+
+
+PUT http://localhost:3333/api/users/register/student/1
+content-type: application/json
+
+{
+    "student_id":1,
+    "student_name": "Nombre Student",
+    "student_zip": "ZipStude",
+    "student_address": "Direccion Student",
+    "student_phone": "telStuden",
+    "student_last_name": "lastname",
+    "student_image": "image",
+    "student_id_user":1,
+    "student_city": "CiudadStuden"
+
+}
+
+// IMPLEMENTADO - CONSULTA DE LOS USUARIOS
+###
+GET http://localhost:3333/api/users/
+
+###
+GET http://localhost:3333/api/subjects/
+
+###
+GET http://localhost:3333/api/subjects/2
+
+###
+POST http://localhost:3333/api/subjects/
+content-type: application/json
+
+{
+    "name": "MATES"
+}
+
+###
+PUT http://localhost:3333/api/subjects/2
+content-type: application/json
+
+{
+    "name": "Modified"
+}
+
+###
+POST http://localhost:3333/api/subjects
+content-type: application/json
+
+{
+    "name": "materia2"
+}
+
+//********************* LOGIN *********
+// IMPLEMENTADO - LOGIN DE UN USUARIO YA CREADO: comprueba que existe, que no tiene el campo a deleted='SI', su password y crea un TOKEN para 1 hora
+###
+POST http://localhost:3333/api/users/login
+content-type: application/json
+
+{
+    "user_email": "student1@gmail.com",
+    "user_password": "student1"
+}
+
+// IMPLEMENTADO - CONSULTA de TEACHERS CERCA DE 'LENGUA' Y CP '46702' ORDENADORS POR VALORACIÓN
+###
+GET http://localhost:3333/api?materia='LENGUA'&cp='46702'
+
+// IMPLEMENTADO - CONSULTA de TEACHERS CERCA DE 'LENGUA' Y CP '46702' ORDENADORS POR VALORACIÓN
+###
+GET http://localhost:3333/api/teachers/teachersnear?materia='LENGUA'&cp='46702'
+
+// IMPLEMENTADO - A) REGISTRO DE UN USUARIO: almacena el HASH del password, crea User+Teacher vacío (o un Student vacio)
+// Esta funcionalidad devuelve lo datos de Teacher+User al cliente en formato JSON para que se use en el formulario de alta del Teacher
+// para completar su registro. Despues se da al boton de actualizar o grabar y realizar el alta (un PUT) // PUT http://localhost:3333/api/teachers/8
+###
+POST http://localhost:3333/api/users/register
+content-type: application/json
+
+{
+    "user_email": "teacher2@gmail.com",
+    "user_password": "teacher2",
+    "user_username": "teacher2",
+    "user_type": "TEACHER",
+    "user_deleted": "NO"
+}
+
+// IMPLEMENTADO - CONSULTA AL TEACHER 2 + USER
+###
+GET http://localhost:3333/api/teachers/1
+
+###
+// IMPLEMENTADO - B)  REGISTRO DE UN USUARIO: tercera parte del proceso de registro: se enviar los datos del formalio al Teacher y su User al para que lo registre
+// ---- no modificar teach_id ni user_id porque son claves primarias
+ PUT http://localhost:3333/api/teachers/1
+content-type: application/json
+
+{
+    "teach_id": 1,
+    "teach_name": "Nombre Teacher",
+    "teach_zip": "ZipTeach",
+    "teach_address": "Direccion Teach",
+    "teach_phone": "telTeach",
+    "teach_last_name": "telTeach",
+    "teach_image":"image",
+    "teach_city": "CiudadTeach",
+    "teach_price_an_hour":12,
+    "teach_description":"Description of the Teacher",
+    "teach_experience_years":10,
+    "teach_validated": "NO",
+    "teach_id_subject":1,
+    "teach_id_user":1,
+
+
+    "user_id":1,
+    "user_type": "TEACHER",
+    "user_deleted": "NO"
+}
+
+// SIN IMAGEN - NO MACHACA EL CAMPO teach_image. No le pasamos el campo (undefined)
+###
+ PUT http://localhost:3333/api/teachers/1
+content-type: application/json
+
+{
+  "teach_id": 1,
+    "teach_name": "Put sin image Teacher",
+    "teach_zip": "ZipTeach",
+    "teach_address": "Direccion Teach",
+    "teach_phone": "telTeach",
+    "teach_last_name": "telTeach",
+    "teach_city": "CiudadTeach",
+    "teach_price_an_hour":12,
+    "teach_description":"Description of the Teacher",
+    "teach_experience_years":10,
+    "teach_validated": "NO",
+    "teach_id_subject":1,
+    "teach_id_user":1,
+
+
+    "user_id":1,
+    "user_type": "TEACHER",
+    "user_deleted": "NO"
+}
+
+
+###
+GET http://localhost:3333/api/teachers
+
+
+// IMPLEMENTADO - CONSUTLA AL STUDENT 1 + USER
+###
+GET http://localhost:3333/api/students/1
+
+###
+GET http://localhost:3333/api/students
+
+###
+//IMPLEMENTADO -  B)  REGISTRO DE UN USUARIO: .. para STUDENT+USER
+ PUT http://localhost:3333/api/students/1
+content-type: application/json
+
+{
+        "student_name": "MMMMMM",
+        "student_id": 1,
+        "student_zip": "mofificado",
+        "student_address": "mofificado",
+        "student_phone": "mofificado",
+        "student_last_name": "last name",
+        "student_image": "image",
+        "student_city": "mofificado",
+        "student_id_user" : 1,
+
+        "user_id": 1,  
+        "user_type": "STUDENT",
+        "user_deleted": "NO"
+}
+
+
+// IMPLEMENTADO - CONSUTLA AL ADMIN 1 + USER
+###
+GET http://localhost:3333/api/admin/1
+
+###
+GET http://localhost:3333/api/teachers
+
+###
+DELETE http://localhost:3333/api/teacher/1
+content-type: application/json
+
+
+### . NO USAR .....................................
+// IMPLEMENTADO - NO USAR- MODIFICAR DE UN USUARIO POR SU ID
+PUT http://localhost:3333/api/users/1
+content-type: application/json
+
+{
+    "user_email": "profeMODIF@gmail.com",
+    "user_password": "Adosat2020MODIF",
+    "user_username": "robertoalonsoMODIF",
+    "user_type": "TEACHER",
+    "user_deleted":  "NO"
+}
+
+// NO IMPLMENTADO - 
+###
+PATCH http://localhost:3333/api/users/1
+content-type: application/json

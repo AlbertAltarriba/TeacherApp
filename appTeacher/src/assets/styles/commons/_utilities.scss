@@ -1,0 +1,50 @@
+//margin utilities
+
+.mt-6 {
+  margin-top: 4.5rem !important;
+}
+
+//input utilities
+
+.input {
+  padding: 1rem;
+  border: none;
+  border-radius: 0px;
+  border-bottom: 1px solid $dark-grey;
+}
+
+.input:focus {
+  box-shadow: none;
+  border-bottom: 1px solid $orange;
+}
+
+//text utilities--- BEM (block element modifier)
+.font--bolder {
+  font-weight: 700;
+}
+
+//width utilities
+
+.width--155px {
+  width: 155px;
+}
+
+.width--165px {
+  width: 165px;
+}
+
+@media screen and (min-width: 48rem) {
+  .w-md-155px {
+    width: 155px;
+  }
+}
+// Height utilities
+.h-100vh {
+  height: 100%;
+}
+
+@media screen and (min-width: 48rem) {
+  .h-100vh {
+    height: 100vh;
+  }
+}

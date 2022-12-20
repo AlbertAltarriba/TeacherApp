@@ -1,0 +1,42 @@
+yarn run v1.22.19
+$ jest --watchAll --no-cache --detectOpenHandles
+[0mPOST /api/users/register/ [32m200 [0m150.029 ms - 387[0m
+[0mPOST /api/users/register/ [31m500 [0m4.244 ms - 48[0m
+[0mPOST /api/users/login/ [32m200 [0m101.553 ms - 245[0m
+[0mGET /api/admin/ [32m200 [0m10.264 ms - 69677[0m
+[0mDELETE /api/admin/1 [32m200 [0m12.563 ms - 147[0m
+[0mPUT /api/users/register/admin/1 [32m200 [0m8.173 ms - 147[0m
+[0mGET /api/admin/1 [32m200 [0m5.382 ms - 441[0m
+[0mPOST /api/users/login/ [32m200 [0m126.027 ms - 245[0m
+[0mPOST /api/subjects/ [32m200 [0m9.550 ms - 91[0m
+[0mPUT /api/subjects/1 [32m200 [0m8.950 ms - 147[0m
+[0mGET /api/subjects/ [32m200 [0m6.297 ms - 40[0m
+[0mGET /api/subjects/1 [32m200 [0m4.582 ms - 40[0m
+[0mPOST /api/users/register/ [32m200 [0m135.999 ms - 382[0m
+[0mPOST /api/users/login/ [32m200 [0m92.377 ms - 249[0m
+[0mGET /api/students/ [32m200 [0m8.245 ms - 70599[0m
+[0mDELETE /api/students/1 [32m200 [0m8.073 ms - 147[0m
+[0mPUT /api/users/register/students/1 [32m200 [0m7.270 ms - 147[0m
+[0mGET /api/students/1 [32m200 [0m6.648 ms - 75223[0m
+
+[0mPOST /api/users/register/ [31m500 [0m127.941 ms - 80[0m
+[0mPOST /api/users/register/ [31m500 [0m4.096 ms - 48[0m
+[0mPOST /api/users/login/ [32m200 [0m98.745 ms - 245[0m
+[0mGET /api/admin/ [32m200 [0m8.606 ms - 72995[0m
+[0mDELETE /api/admin/1 [32m200 [0m8.819 ms - 147[0m
+[0mPUT /api/users/register/admin/1 [32m200 [0m8.335 ms - 147[0m
+[0mGET /api/admin/1 [32m200 [0m5.718 ms - 441[0m
+[0mPOST /api/users/login/ [32m200 [0m127.870 ms - 245[0m
+[0mPOST /api/subjects/ [32m200 [0m9.298 ms - 91[0m
+[0mPUT /api/subjects/1 [32m200 [0m11.242 ms - 147[0m
+[0mGET /api/subjects/ [32m200 [0m4.734 ms - 75[0m
+[0mGET /api/subjects/1 [32m200 [0m5.554 ms - 40[0m
+[0mPOST /api/users/register/ [31m500 [0m130.142 ms - 82[0m
+[0mPOST /api/users/login/ [32m200 [0m96.539 ms - 249[0m
+[0mGET /api/students/ [32m200 [0m7.939 ms - 75253[0m
+[0mDELETE /api/students/1 [32m200 [0m8.291 ms - 147[0m
+[0mPUT /api/users/register/students/1 [32m200 [0m6.676 ms - 147[0m
+[0mGET /api/students/1 [32m200 [0m6.766 ms - 75223[0m
+
+
+Done in 49.06s.

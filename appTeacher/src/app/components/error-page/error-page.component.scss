@@ -1,0 +1,19 @@
+@import '../../../assets/styles/commons/_commons-dir';
+.error{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    h1{
+        font-size:6rem;
+        font-weight: 700;
+        font-family: $primary-font;
+        span{
+            color:$orange;
+        }
+    }
+    p{
+        font-size: 2rem;
+    }
+}

@@ -1,0 +1,179 @@
+@import "../../../assets/styles/commons/_commons-dir";
+
+
+  .sidebar {
+      display: flex;
+      height: 100vh;
+  
+      &__main {
+        .first-row {
+  
+          // border: 1px solid tomato;
+          h1 {
+            font-size: 1.4rem;
+            font-family: $primary-font;
+            margin-bottom: 2rem;
+          }
+  
+          &-inputs {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 2rem;
+            font-family: $btn-font;
+  
+            &-group {
+              display: flex;
+              flex-direction: column;
+              justify-content: center;
+              flex-basis: 22%;
+              background-color: $white;
+              padding: 0.5rem 0.5rem 0 0.5rem;
+              border-bottom: 2px solid #cccccc;
+  
+              span {
+                color: $dark-grey;
+                font-size: 0.75rem;
+              }
+  
+              input {
+                border: none;
+                padding: 0;
+              }
+  
+              .form-select {
+                border: none;
+                padding: 0.65rem;
+              }
+            }
+  
+            .primary-button {
+              flex-basis: 22%;
+              border-radius: 14px;
+            }
+          }
+        }
+  
+        .second-row {
+          background-color: $white;
+          border-radius: 30px;
+          margin-top: 1.5rem;
+          padding: 1.5rem;
+  
+          &-first {
+            h2 {
+              font-size: 1.375rem;
+              font-family: $primary-font;
+            }
+            
+
+              &-buttons {
+                font-family: $btn-font;
+                width:40px;
+    
+                .form-select {
+                  padding: 1rem;
+                  flex: 1;
+                
+    
+                  option .selected {
+                    color: $dark-grey !important;
+                    font-size: 0.875rem;
+                  }
+                }
+    
+                .primary-button {
+                  padding: 0.25rem;
+                  flex: 1;
+                }
+              }
+            
+  
+            .menu-students {
+              display: flex;
+              flex-basis: 25%;
+            }
+          }
+  
+          &-inputs-group {
+            background-color: $white;
+            padding: 0.5rem 0.5rem 0 0.5rem;
+            border: 2px solid $orange;
+  
+            input {
+              border: none;
+              padding: 0;
+              padding-bottom: 0.25rem;
+            }
+  
+            span {
+              color: $dark-grey;
+              font-size: 0.75rem;
+              padding: 0rem;
+            }
+  
+            .form-select {
+              border: none;
+              padding: none;
+            }
+          }
+  
+          &-second {
+            margin-bottom: 2.25rem;
+  
+            .table {
+              thead {
+                .name {
+                  text-indent: 2rem;
+                }
+              }
+  
+              tbody {
+                td {
+                  padding: 0.75rem;
+                }
+  
+                input {
+                  margin-right: 1rem;
+                }
+              }
+            }
+          }
+  
+          &-third {
+            display: flex;
+            justify-content: space-between;
+  
+            p {
+              color: $dark-grey;
+              margin-left: 3rem;
+            }
+  
+            &-nav {
+              color: $dark-grey;
+  
+              .paggination {
+                li {
+                  margin: 0 0.5rem;
+                }
+              }
+            }
+          }
+        }
+      }
+  
+      .form-check-input:checked {
+        background-color: white;
+        border: 0;
+        box-shadow: none;
+        background: url("../../images/Radiobutton_Selected.png") center repeat;
+      }
+    }
+    .menu-teacher select{
+      width: 200px;
+    }
+
+    .admin-select{
+      width: 200px;
+    }
+

@@ -1,0 +1,225 @@
+<header *ngIf="!edit">
+  <app-header></app-header>
+</header>
+
+<div class="container form mt-6">
+  <div class="row">
+    <div class="container-w">
+      <div *ngIf="edit" class="aside-container">
+        <aside class="offcanvas-lg offcanvas-start col-lg-3 h-100vh " tabindex="-1" id="offcanvasResponsive" aria-labelledby="offcanvasResponsiveLabel">
+          <div class="offcanvas-header justify-content-end"> 
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#offcanvasResponsive" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body sidebar__sidebar h-100">
+            <app-aside class="me-lg-5 me-xl-0"></app-aside>
+          </div>
+        </aside>
+      </div>
+      
+
+      <div *ngIf="!edit" class="form-image mb-5 mb-lg-0 px-5 ">
+        <img src="assets/images/formImage.png" alt="create account" class="form_img"/>
+      </div>
+
+      <section aria-labelledby="signin-header" class="mb-5 ms-2 ms-xl-5" [ngClass]="{'section-form':!edit, 'section-form-profile':edit}">
+        <div *ngIf="!edit" class="form-header d-flex flex-column align-items-center align-items-md-start">
+          <h3 id="singin-header" class="form-header-title mb-3">Regístrate en</h3>
+          <h2 class="form-header-subtitle mb-3">Teacher App</h2>
+          <p class="form-header-text">
+            <span>¿Eres profesor o alumno?</span> Regístrate y disfruta de todas
+            las ventajas de ser miembro de TeacherApp, encuentra al profesor que
+            buscas de manera inmediata y reserva tu clase al instante.
+          </p>
+        </div>
+        <form [formGroup]="registerForm" (ngSubmit)="getDataForm()">
+          <article class="form-body d-flex flex-column mt-3">
+            <div *ngIf="!edit" class="d-flex justify-content-center justify-content-md-start">
+              <div class="form-check form-check-inline form-body__radio mb-3">
+                <input class="form-check-input" type="radio" name="rol" id="profesor" value="profesor" (change)="onRolChange('profesor')"/>
+                <label for="profesor" class="form-check-label">Profesor</label>
+              </div>
+              <div class="form-check form-check-inline form-body__radio ms-2">
+                <input class="form-check-input" type="radio" name="rol" id="alumno" value="alumno" (change)="onRolChange('alumno')"/>
+                <label for="alumno" class="form-check-label">Alumno</label>
+              </div>
+            </div>
+            <div *ngIf="rol !== 'default'">
+              <div class="row mt-3">
+                <div class="col-10">
+                  <h3 *ngIf="edit">Perfil de {{ userName }}</h3>
+                </div>
+                <div *ngIf="edit" class="col-2">
+                  <button class="btn primary-button d-lg-none sidebar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasResponsive" aria-controls="offcanvasResponsive">
+                    <i class="fa-solid fa-bars"></i>
+                  </button>
+                </div>
+              </div>
+              <p class="form-body__small-text mb-3">Los campos marcados con (*) son obligatorios.</p>
+              <div *ngIf="rol === 'profesor'" class="">
+                <h2 *ngIf="!edit" class="form-body__title mb-3 mt-4">¿Qué materia quieres impartir?</h2>
+                <div class="row">
+                  <div class="form-body__teacher col-12 col-md-6">
+                    <div class="form-body__select mb-3 pt-1">
+                      <label for="materia">Materia</label>
+                      <select *ngIf="!edit" class="form-select" id="materia" #select (change)="onMateriaSelected(select.value)">
+                        <option [value]="materia.subj_id" *ngFor="let materia of arrMaterias; let first = first" [selected]="first">{{ materia.subj_name }}</option>
+                        <option value="new">Otra</option>
+                      </select>
+                      <select *ngIf="edit" class="form-select" id="materia-opt">
+                        <option>{{ materiaName }}</option>
+                      </select>
+                    </div>
+                    <div *ngIf="materiaSelect === 'new'" class="mb-3 form-body__select-input">
+                      <input type="text" class="form-control input" id="new_materia" placeholder="Nueva materia*" formControlName="new_materia"/>
+                      <p class="error" *ngIf="checkControl('new_materia', 'required')">Campo requerido</p>
+                    </div>
+                    <div class="mb-3">
+                      <label for="price" class="form-label">Precio/hora</label>
+                      <input type="text" class="form-control input" id="price" placeholder="Precio/hora*" formControlName="price"/>
+                      <p class="error" *ngIf="checkControl('price', 'required')">Campo requerido</p>
+                      <p class="error" *ngIf="checkControl('price', 'pattern')">Este campo solo puede ser un número</p>
+                    </div>
+                    <div class="mb-3">
+                      <label for="experiencia" class="form-label">Experiencia</label>
+                      <input type="text" class="form-control input" id="experiencia" placeholder="Experiencia (años)*" formControlName="experiencia"/>
+                      <p class="error" *ngIf="checkControl('experiencia', 'required')">Campo requerido</p>
+                      <p class="error" *ngIf="checkControl('experiencia', 'pattern')">Este campo solo puede ser un número</p>
+                      <p class="error" *ngIf="checkControl('experiencia', 'maxlength')"> Valor demasiado alto</p>
+                    </div>
+                  </div>
+                  <div class="form-body__textarea pe-0 col-12 col-md-6">
+                    <textarea class="form-control input pb-1" id="descripcion" placeholder="Deja una descripción*" rows="10" formControlName="descripcion"></textarea>
+                    <p class="error" *ngIf="checkControl('descripcion', 'required')">Campo requerido</p>
+                  </div>
+                </div>
+              </div>
+
+              <h3 class="form-body__section-title mb-3 mt-5">Datos personales</h3>
+              <div class="mb-3">
+                <label for="nombre" class="form-label">Nombre</label>
+                <input type="text" class="form-control input" id="nombre" placeholder="Nombre*" formControlName="nombre"/>
+                <p class="error" *ngIf="checkControl('nombre', 'required')">Campo requerido</p>
+                <p class="error" *ngIf="checkControl('nombre', 'minlength')">El nombre debe tener al menos dos caracteres</p>
+              </div>
+              <div class="col-12 d-flex flex-row justify-content-between mb-3">
+                <div class="col-6">
+                  <label for="primer_apellido" class="form-label">Primer apellido</label>
+                  <input type="text" class="form-control input" id="primer_apellido" placeholder="Primer apellido*" formControlName="primer_apellido"/>
+                  <p class="error" *ngIf="checkControl('primer_apellido', 'required')">Campo requerido</p>
+                </div>
+                <div class="col-6">
+                  <div class="ms-4">
+                    <label for="segundo_apellido" class="form-label">Segundo apellido</label>
+                    <input type="text" class="form-control input" id="segundo_apellido" placeholder="Segundo apellido" formControlName="segundo_apellido"/>
+                  </div>
+                </div>
+              </div>
+
+              <div *ngIf="rol === 'profesor'" class="mb-3">
+                <label for="imagen" class="form-label">Fotografía</label>
+                <input class="form-control input" type="file" accept="image/*" id="imagen" (change)="onImageChange($event)"/>
+              </div>
+
+              <!-- <div *ngIf="rol==='profesor' && edit" class="mb-3">
+                      <figure>
+                        <img [src]="'http://localhost:3000/images/' + imageRes " alt="">
+                      </figure>
+                    </div> -->
+
+              <div class="mb-3">
+                <label for="direccion" class="form-label">Dirección</label>
+                <input type="text" class="form-control input" id="direccion" placeholder="Dirección*" formControlName="direccion"/>
+                <p class="error" *ngIf="checkControl('direccion', 'required')">Campo requerido</p>
+              </div>
+
+              <div class="col-12 d-flex flex-row justify-content-between mb-3">
+                <div class="col-6">
+                  <label for="ciudad" class="form-label">Ciudad</label>
+                  <input type="text" class="form-control input" id="ciudad" placeholder="Ciudad*" formControlName="ciudad"/>
+                  <p class="error" *ngIf="checkControl('ciudad', 'required')">Campo requerido</p>
+                </div>
+                <div class="col-6">
+                  <div class="ms-4">
+                    <label for="zip" class="form-label">Código Postal</label>
+                    <input type="text" class="form-control input" id="zip" placeholder="Código Postal*" formControlName="zip"/>
+                    <p class="error" *ngIf="checkControl('zip', 'required')">Campo requerido</p>
+                    <p class="error" *ngIf="checkControl('zip', 'pattern')">Código postal no válido</p>
+                    <p class="error" *ngIf="checkControl('zip', 'maxlength')">Código postal no válido</p>
+                  </div>
+                </div>
+              </div>
+
+              <h3 class="form-body__section-title mb-4 mt-5">Datos de contacto</h3>
+              <div class="mb-4">
+                <label for="email" class="form-label">Email</label>
+                <input type="text" class="form-control input" id="email" placeholder="Email*" formControlName="email" [readOnly]="edit"/>
+                <p class="error" *ngIf="checkControl('email', 'required')">Campo requerido</p>
+                <p class="error" *ngIf="checkControl('email', 'pattern')">Formato de email no válido</p>
+              </div>
+
+              <div class="col-12">
+                <label for="num_tel" class="form-label">Número de teléfono</label>
+                <input type="text" class="form-control input" id="num_tel" placeholder="Número de teléfono*" formControlName="num_tel"/>
+                <p class="error" *ngIf="checkControl('num_tel', 'required')">Campo requerido</p>
+                <p class="error" *ngIf="checkControl('num_tel', 'maxlength')">Teléfono demasiado largo</p>
+              </div>
+
+              <h3 *ngIf="!edit" class="form-body__section-title mt-5 mb-4">Introduce una contraseña</h3>
+              <div *ngIf="!edit" class="mb-4">
+                <label for="password" class="form-label">Contraseña</label>
+                <input type="password" class="form-control input" id="password" placeholder="Contraseña*" formControlName="password"/>
+                <p class="error" *ngIf="checkControl('password', 'required')">Campo requerido</p>
+                <p class="error" *ngIf="checkControl('password', 'minlength')">La longitud de la contraseña debe ser entre 6 y 20 caracteres</p>
+                <p class="error" *ngIf="checkControl('password', 'maxlength')">La longitud de la contraseña debe ser entre 6 y 20 caracteres</p>
+              </div>
+
+              <div *ngIf="!edit" class="mb-5">
+                <label for="password2" class="form-label">Repite tu contraseña</label>
+                <input type="password" class="form-control input" id="password2" placeholder="Repite tu contraseña*" formControlName="password2"/>
+                <p class="error" *ngIf="checkControl('password2', 'required')">Campo requerido</p>
+                <p class="error" *ngIf="registerForm.hasError('passwordvalidator')">Las contraseñas deben coincidir</p>
+              </div>
+
+              <div *ngIf="!edit" class="form-check">
+                <div class="d-flex">
+                  <input class="form-check-input checkbox me-3" type="checkbox" id="condiciones" value="condiciones" formControlName="condiciones"/>
+                  <label for="condiciones" class="label">Acepto las condiciones generales de <span>TeacherApp</span> y la <span>política de privacidad</span></label>
+                </div>
+                <p class="error" *ngIf="checkControl('condiciones', 'condicionesvalidator')">{{ registerForm.get('condiciones')?.errors?.['condicionesvalidator'] }}</p>
+              </div>
+
+              <button type="submit" class="primary-button mt-5 mb-4"> {{ submitMessage }}</button>
+            </div>
+
+            <p *ngIf="!edit" class="mb-5 text-center text-md-start">¿ Ya eres parte de TeacherApp ?<a [routerLink]="['/login']"> Inicia sesión</a></p>
+          </article>
+        </form>
+      </section>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="popUp" data-bs-backdrop="static" aria-labelledby="popUpLabel" aria-hidden="true" data-bs-backdrop="false">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-body__image ps-md-4 me-md-4 mb-3 mb-md-0">
+          <figure>
+            <img [src]="getModalImg" alt="" />
+          </figure>
+        </div>
+        <div class="modal-body__text">
+          <h2 [innerHTML]="getModalTitle" class="col-12 col-md-6 modal-body__text-title mb-4"></h2>
+          <p [innerHTML]="getModalBody" class="modal-body__text-content mb-4 mb-md-5"></p>
+          <button *ngIf="getModalRoute === ''; else bloqueElse" type="button" class="primary-button btn-popup-alone" data-bs-dismiss="modal" aria-label="Close">Volver</button>
+          <ng-template #bloqueElse>
+            <a [href]="getModalRoute" class="primary-button btn-popup-alone text-center">{{getModalButton}}</a>
+          </ng-template>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,411 @@
+<div class="container-fluid">
+  <!-- Sidebar -->
+  <div class="row sidebar">
+    <aside
+      class="offcanvas-lg offcanvas-start col-lg-3"
+      tabindex="-1"
+      id="offcanvasResponsive"
+      aria-labelledby="offcanvasResponsiveLabel"
+    >
+      <div class="offcanvas-header justify-content-end">
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="offcanvas"
+          data-bs-target="#offcanvasResponsive"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="offcanvas-body sidebar__sidebar h-100">
+        <app-aside></app-aside>
+      </div>
+    </aside>
+
+    <!-- Main -->
+    <main class="sidebar__main col-12 col-lg">
+      <div class="sidebar__main first-row">
+        <div class="row mt-3">
+          <div class="col-10">
+            <h1>{{ areaTitle }}</h1>
+          </div>
+          <div class="col-2">
+            <button
+              class="btn primary-button d-lg-none"
+              type="button"
+              data-bs-toggle="offcanvas"
+              data-bs-target="#offcanvasResponsive"
+              aria-controls="offcanvasResponsive"
+            >
+              <i class="fa-solid fa-bars"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- PRIMERA ROW: INPUTS DE BÚSQUEDA DE LOS DISTINTOS TIPOS DE USER -->
+
+        <div class="row">
+          <div class="col-12 col-lg-3 mb-3 inputs-defcon">
+            <label class="form-label">Nombre</label>
+            <input type="text" class="form-control" [(ngModel)]="inputName" />
+          </div>
+          <!-- input de matrículas activas -->
+          <div class="col-12 col-lg-3 mb-3" *ngIf="rolTeacher">
+            <label class="form-label">Activa</label>
+            <input type="text" class="form-control" [(ngModel)]="inputActive" />
+          </div>
+          <div class="col-12 col-lg-3 mb-3" *ngIf="rolStudent">
+            <label class="form-label">Ciudad</label>
+            <input
+              type="text"
+              class="form form-control"
+              [(ngModel)]="inputCity"
+            />
+          </div>
+
+          <div class="col-12 col-lg-3 mb-3" *ngIf="rolStudent">
+            <label class="form-label">Código Postal</label>
+            <input
+              type="text"
+              class="form form-control"
+              [(ngModel)]="inputZip"
+            />
+          </div>
+          <div class="col-12 col-lg-3 mb-3" *ngIf="rolStudent || rolAdmin">
+            <label class="form-label">Materia</label>
+            <select
+              class="form-select"
+              aria-label=".form-select-sm example"
+              [(ngModel)]="inputSubject"
+            >
+              <option selected value="">Materia</option>
+              <option
+                *ngFor="let subject of arrSubjects"
+                value="{{ subject.subj_id }}"
+              >
+                {{ subject.subj_name }}
+              </option>
+            </select>
+          </div>
+          <!-- buttonSearch if is a teacher -->
+          <div class="d-flex">
+            <button
+              class="btn secondary-button width--155px me-2"
+              *ngIf="rolTeacher"
+              (click)="eraseFilterStudent()"
+            >
+              Borrar búsqueda
+            </button>
+            <button
+              class="btn primary-button width--155px"
+              *ngIf="rolTeacher"
+              (click)="filterStudents(inputName, inputActive)"
+            >
+              Buscar
+            </button>
+          </div>
+          <!-- if is an admin -->
+          <div class="first-group-options" *ngIf="rolAdmin">
+            <div class="first-group-options-check">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                name="flexRadioDefault"
+                id="filterTeacherToValidate"
+                (click)="filterTeacherToValidate($event)"
+              />Profesores no validados
+            </div>
+            <div class="d-flex mt-3">
+              <button
+                class="btn secondary-button width--155px"
+                (click)="eraseFilterTeacher()"
+              >
+                Borrar búsqueda
+              </button>
+              <button
+                class="btn primary-button width--155px"
+                (click)="
+                  filterTeachers(inputName, inputCity, inputZip, inputSubject)
+                "
+              >
+                Buscar
+              </button>
+            </div>
+          </div>
+          <!-- if is a student -->
+          <div class="first-group-student" *ngIf="rolStudent">
+            <button
+              class="btn secondary-button width--155px"
+              (click)="eraseFilterTeacher()"
+            >
+              Borrar búsqueda
+            </button>
+            <button
+              class="btn primary-button width--155px"
+              (click)="
+                filterTeachers(inputName, inputCity, inputZip, inputSubject)
+              "
+            >
+              Buscar
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="sidebar__main second-row">
+        <!-- ***********menu profesor*************************************-->
+        <div class="second-row-first menu-teacher" *ngIf="rolTeacher">
+          <h2>Matrícula de los alumnos</h2>
+          <div class="d-flex menu-teacher">
+            <select
+              class="form-select secondary-button me-2"
+              aria-label="Default select example"
+              #select
+              (change)="onSelectedProfesor(select.value)"
+              [(ngModel)]="action"
+            >
+              <option selected>¿Qué quieres hacer?</option>
+              <option value="aprobarEnroll">Aprobar matrícula</option>
+              <option value="eliminarEnroll">Eliminar matrícula</option>
+            </select>
+
+            <button
+              class="btn primary-button"
+              [disabled]="isDisabledProfesor"
+              (click)="validateEnroll(enrollToValidate)"
+            >
+              {{ actionText }}
+            </button>
+
+            <!-- ********************fin menú profesor*********************** -->
+          </div>
+        </div>
+
+        <!-- ***********menu alumno*************************************-->
+        <div
+          class="ms-1 second-row-first menu-students d-flex mb-4"
+          *ngIf="rolStudent"
+        >
+          <div class="second-row-inputs-group me-4 width--165px">
+            <span>Ordenar por</span>
+            <select
+              class="form-select form-select-sm"
+              aria-label=".form-select-sm example"
+              (change)="sortTeachers($event)"
+            >
+              <option selected value="price">Precio</option>
+              <option value="experience">Experiencia</option>
+            </select>
+          </div>
+
+          <button
+            class="btn primary-button width--165px"
+            (click)="postEnroll(teacherToEnroll)"
+          >
+            {{ actionText }}
+          </button>
+
+        </div>
+
+        <!-- ********************fin menú alumno*********************** -->
+        <!-- menu admin -->
+        <div class="menu-admin" *ngIf="rolAdmin">
+          <div class="d-flex flex-wrap">
+            <div class="menu-admin-inputs__input">
+              <select
+                class="form-select width--165px secondary-button me-2"
+                aria-label=".form-select-sm example"
+                (change)="sortTeachers($event)"
+              >
+                <option class="selected" selected>Ordenar por</option>
+                <option value="price">Precio</option>
+                <option value="experience">Experiencia</option>
+              </select>
+            </div>
+
+            <div class="menu-admin-inputs__input">
+              <select
+                class="form-select admin-select secondary-button me-md-2"
+                aria-label="Default select example"
+                #select
+                (change)="onSelectedAdmin(select.value)"
+              >
+                <option value="default" class="selected" selected>
+                  ¿Qué quieres hacer?
+                </option>
+                <option value="validar">Validar profesor</option>
+                <option value="eliminar">Eliminar profesor</option>
+              </select>
+            </div>
+            <div class="menu-admin-inputs__input">
+              <button
+                class="btn primary-button width--165px mt-3 mt-md-0"
+                [disabled]="isDisabledAdmin"
+                (click)="validateTeacher(teacherToValidate)"
+              >
+                {{ actionText }}
+              </button>
+            </div>
+          </div>
+        </div>
+        <!-- fin menu admin -->
+
+        <!-- TABLAS DE LOS DISTINTOS USER -->
+        <div class="second-row-second overflow-scroll">
+          <!-- tabla profesor -->
+          <table class="table" *ngIf="rolTeacher">
+            <thead>
+              <tr>
+                <th class="name" scope="col">Nombre</th>
+                <th scope="col">Teléfono</th>
+                <th scope="col">Email</th>
+                <th scope="col">Activa</th>
+                <th scope="col">Ciudad</th>
+                <th scope="col">Código postal</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let enroll of enrolls">
+                <td>
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    name="rol"
+                    value="{{ enroll.enroll_id }}"
+                    id="flexRadioDefault1"
+                    [(ngModel)]="enrollToValidate"
+                  />
+                  {{ findStudentEnroll(enroll.enroll_id_student) }}
+                </td>
+                <td>{{ studentPhone }}</td>
+                <td>{{ studentMail }}</td>
+                <td>{{ enroll.enroll_deleted }}</td>
+                <td>{{ studentCity }}</td>
+                <td>{{ studentZip }}</td>
+              </tr>
+            </tbody>
+          </table>
+          <!-- fin tabla profesor -->
+          <!-- tabla alumno -->
+          <table class="table table-student table-admin" *ngIf="rolStudent">
+            <thead>
+              <tr>
+                <th class="name" scope="col">Profesor</th>
+                <th scope="col">Materia</th>
+                <th scope="col">Precio Hora</th>
+                <th scope="col">Experiencia</th>
+                <th scope="col">Ciudad</th>
+                <th scope="col">Código postal</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let teacher of arrTeachersAll">
+                <td>
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    name="rol"
+                    [value]="teacher.teach_id"
+                    id="flexRadioDefault1"
+                    [(ngModel)]="teacherToEnroll"
+                  />{{ teacher.teach_name }}
+                </td>
+                <td>{{ findSubject(teacher.teach_id_subject) }}</td>
+                <td>{{ teacher.teach_price_an_hour }} €</td>
+                <td>{{ teacher.teach_experience_years }} años</td>
+                <td>{{ teacher.teach_city }}</td>
+                <td>{{ teacher.teach_zip }}</td>
+              </tr>
+              <tr></tr>
+            </tbody>
+          </table>
+          <!-- tablas de admin -->
+          <table class="table table-student table-admin" *ngIf="rolAdmin">
+            <thead>
+              <tr>
+                <th class="name" scope="col">Profesor</th>
+                <th scope="col">Materia</th>
+                <th scope="col">Precio Hora</th>
+                <th scope="col">Experiencia</th>
+                <th scope="col">Validado</th>
+                <th scope="col">Email</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let teacher of arrTeachersAll">
+                <td>
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    name="rol"
+                    [value]="teacher.teach_id"
+                    id="flexRadioDefault1"
+                    [(ngModel)]="teacherToValidate"
+                  />{{ teacher.teach_name }}
+                </td>
+                <td>{{ findSubject(teacher.teach_id_subject) }}</td>
+                <td>{{ teacher.teach_price_an_hour }} €</td>
+                <td>{{ teacher.teach_experience_years }} años</td>
+                <td>{{ teacher.teach_validated }}</td>
+                <td>{{ teacher.user_email }}</td>
+              </tr>
+              <tr></tr>
+            </tbody>
+          </table>
+
+          <!-- fin tabla admin -->
+        </div>
+
+        <!--  <div class="second-row-third d-flex flex-column align-items-center">
+          <p>Showing data 1 to 8 of 256k entries</p>
+          <nav
+            class="second-row-third-nav d-flex justify-content-center"
+            aria-label="Page navigation example"
+          >
+            <ul class="pagination">
+              <li class="page-item">
+                <a
+                  class="page-link"
+                  aria-label="Previous"
+                  (click)="previousPagination()"
+                >
+                  <span aria-hidden="true">&laquo;</span>
+                </a>
+              </li>
+              <span class="page-link"> {{ currentPage }}</span>
+              <li class="page-item">
+                <a
+                  class="page-link"
+                  aria-label="Next"
+                  (click)="nextPagination()"
+                >
+                  <span aria-hidden="true">&raquo;</span>
+                </a>
+              </li>
+            </ul>
+          </nav>
+        </div> -->
+      </div>
+    </main>
+
+    <div class="modal fade" id="popUp" data-bs-backdrop="static" aria-labelledby="popUpLabel" aria-hidden="true" data-bs-backdrop="false">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div class="modal-body__image ps-md-4 me-md-4 mb-3 mb-md-0">
+              <figure>
+                <img [src]="getModalImg" alt="Imagen pop up" />
+              </figure>
+            </div>
+            <div class="modal-body__text">
+              <h2 [innerHTML]="getModalTitle" class="modal-body__text-title mb-5"></h2>
+              <p [innerHTML]="getModalBody" class="modal-body__text-content"></p>
+              <button type="button" class="primary-button btn-popup-alone" (click)="closeModal()">Volver</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

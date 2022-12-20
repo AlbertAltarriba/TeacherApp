@@ -1,0 +1,73 @@
+@import '../../../assets/styles/commons/variables';
+
+
+.modal{
+    background-color: rgba($orange,0.58);
+    --bs-modal-header-border-width: 0px;
+    --bs-modal-width: 650px;
+    --bs-modal-border-radius: 10px;
+
+    &-body{
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        img{
+            max-width: 100%;
+            height: auto;
+        }
+        &__text{
+            display: flex;
+            flex-direction: column;
+            text-align: center;
+            &-title{
+                color: $orange;
+                font-family: $title-font !important;
+                font-weight: 700;
+                font-size: 1.5rem !important;
+                width: 90%;
+            }
+            &-content{
+                font-family: $primary-font;
+                color: $dark-grey;
+            }
+            span{
+                font-weight: 700;
+            }
+        }
+    } 
+    &-btn-container{
+        display: flex;
+        width: 90%;
+        align-content: center;
+        
+    }
+}
+.btn-popup-alone{
+    width: 100%;
+    text-decoration: none;
+}
+.btn-popup{
+    flex-basis: 50%;
+}
+.btn-close{
+    background:  url("../../images/Clear.svg") center no-repeat;
+    opacity: 1;
+}
+
+@media (min-width: 768px) {
+
+    .modal{
+        &-body{
+        display: flex;
+        flex-direction: row;
+        
+            &__text{
+                text-align: left;
+                flex-grow: 1;
+            }
+    }
+
+}
+
+}

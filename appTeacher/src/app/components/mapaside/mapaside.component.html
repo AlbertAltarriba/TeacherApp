@@ -1,0 +1,136 @@
+<aside class="sidebar__sidebar">
+  <div class="sidebar__sidebar--title">Filtrar por:</div>
+  <div class="sidebar__sidebar-filters">
+    <div class="sidebar__sidebar-filters-filter filter-subjects">
+      <div class="filter-head subjects">
+        <p>Materia</p>
+        <a (click)="viewMaterias()">
+          <img
+            src="./../../../assets/images/Remove.svg"
+            alt="remove filter"
+            *ngIf="showFilterMateria"
+          />
+          <img
+            src="./../../../assets/images/Add.svg"
+            alt="add filter"
+            *ngIf="!showFilterMateria"
+          />
+        </a>
+      </div>
+      <div class="filter-subjects options" *ngIf="showFilterMateria">
+        <!-- ngFor con los subjects -->
+        <div class="form-check" *ngFor="let subject of arrSubjects">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            value="{{ subject.subj_id }}"
+            id="flexCheckDefault"
+            (change)="guardarFiltro($event)"
+          />
+          <!--ira en el value el id subject-->
+          <label class="form-check-label" for="flexCheckDefault">
+            {{ subject.subj_name }}
+          </label>
+        </div>
+      </div>
+    </div>
+    <div class="sidebar__sidebar-filters-filter filter-valuate">
+      <div class="filter-head valuate">
+        <p>Valoración</p>
+        <a (click)="viewValoration()">
+          <img
+            src="./../../../assets/images/Remove.svg"
+            alt="remove filter"
+            *ngIf="showFilterValoration"
+          />
+          <img
+            src="./../../../assets/images/Add.svg"
+            alt="add filter"
+            *ngIf="!showFilterValoration"
+          />
+        </a>
+      </div>
+      <div class="filter-valuate options" *ngIf="showFilterValoration">
+        <!-- ngFor con las valoraciones -->
+        <div class="form-check" *ngFor="let valoration of arrValorations">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            value="{{ valoration }}"
+            id="flexCheckDefault"
+          />
+          <label class="form-check-label" for="flexCheckDefault">
+            {{ valoration }}
+          </label>
+        </div>
+      </div>
+    </div>
+    <!-- filter experience -->
+    <div class="sidebar__sidebar-filters-filter filter-experience">
+      <div class="filter-head experience">
+        <p>Experiencia</p>
+        <a (click)="viewExperience()">
+          <img
+            src="./../../../assets/images/Remove.svg"
+            alt="remove filter"
+            *ngIf="showFilterExperience"
+          />
+          <img
+            src="./../../../assets/images/Add.svg"
+            alt="add filter"
+            *ngIf="!showFilterExperience"
+          />
+        </a>
+      </div>
+      <div class="filter-experience options" *ngIf="showFilterExperience">
+        <!-- ngFor con la experience -->
+        <div class="form-check" *ngFor="let experience of arrExperiences">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            value="{{ experience }}"
+            id="flexCheckDefault"
+          />
+          <label class="form-check-label" for="flexCheckDefault">
+            {{ experience }} años
+          </label>
+        </div>
+      </div>
+    </div>
+    <!-- filter prices -->
+    <div class="sidebar__sidebar-filters-filter filter-experience">
+      <div class="filter-head experience">
+        <p>Precios</p>
+        <a (click)="viewPrices()">
+          <img
+            src="./../../../assets/images/Remove.svg"
+            alt="remove filter"
+            *ngIf="showFilterPrices"
+          />
+          <img
+            src="./../../../assets/images/Add.svg"
+            alt="add filter"
+            *ngIf="!showFilterPrices"
+          />
+        </a>
+      </div>
+      <div class="filter-experience options" *ngIf="showFilterPrices">
+        <!-- ngFor con los prices -->
+        <div class="form-check" *ngFor="let price of arrPrices">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            value="{{ price }}"
+            id="flexCheckDefault"
+          />
+          <label class="form-check-label" for="flexCheckDefault">
+            {{ price }} €/hora
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="sidebar__sidebar-button">
+    <button class="primary-button">Aplicar Cambios</button>
+  </div>
+</aside>

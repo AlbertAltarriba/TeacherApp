@@ -1,0 +1,94 @@
+<aside class="sidebar__sidebar">
+  <div class="sidebar__sidebar-first-group">
+    <div class="sidebar__sidebar-first-group-logo" [routerLink]="['/map']">
+      <img src="../../../assets/images/Group 9.jpg" alt="" title="Ir al mapa" />
+    </div>
+    <div class="sidebar__sidebar-first-group-buttons">
+      <!-- btn perfil para todos igual -->
+      <!-- botón de perfil -->
+      <a *ngIf="userType!=='admin'"
+        class="sidebar__sidebar-first-group-buttons-profile primary-button"
+        (click)="goToProfile()"
+        [ngClass]="{ orange: myProfile }"
+        ><img
+          src="../../../assets/images/Dashboard profesor/logoProfile.svg"
+        />Tu perfil
+        <img
+          src="../../../assets/images/Dashboard profesor/chevron-right 2.svg"
+        />
+      </a>
+      <!-- btn dashboard en función de tipo de user -->
+      <a
+        class="sidebar__sidebar-first-group-buttons-students primary-button"
+        (click)="userNavigate()"
+        ><img
+          src="../../../assets/images/Dashboard profesor/user-square grey.png"
+        />
+        {{ btnText }}
+        <img
+          class="chevron"
+          src="../../../assets/images/Dashboard profesor/chevron-right 2.svg"
+        />
+      </a>
+      <!-- valorar profesor. caso de ser alumno -->
+      <a
+        class="sidebar__sidebar-first-group-buttons-profile primary-button"
+        (click)="valorationNavigate()"
+        *ngIf="rolStudent"
+      >
+        <img
+          src="../../../assets/images/Dashboard profesor/logoProfile.svg"
+        />Valorar profesor
+        <img
+          src="../../../assets/images/Dashboard profesor/chevron-right 2.svg"
+        />
+      </a>
+      <!-- boton para dar de alta o baja alumnos. En caso de ser Admin -->
+      <a
+        class="sidebar__sidebar-first-group-buttons-profile primary-button"
+        *ngIf="rolAdmin || routeAdmin == 'students'"
+        (click)="adminNavigate()"
+      >
+        <img src="../../../assets/images/Dashboard profesor/logoProfile.svg" />
+        Alumnos
+        <img
+          src="../../../assets/images/Dashboard profesor/chevron-right 2.svg"
+        />
+      </a>
+    </div>
+  </div>
+  <!-- parte de abajo del aside -->
+  <div class="sidebar__sidebar-info">
+    <!-- user info -->
+    <!-- //en caso de entrar como student -->
+    <div class="sidebar__sidebar-info-user" *ngIf="rolStudent">
+      <div
+        class="sidebar__sidebar-info-user-info"
+        *ngFor="let st of studentProfile"
+      >
+        <p class="name">{{ st.student_name }}</p>
+        <p class="description">{{ st.user_type }}</p>
+      </div>
+    </div>
+    <!-- //en caso de entrar como teacher -->
+    <div class="sidebar__sidebar-info-user" *ngIf="rolTeacher">
+      <div
+        class="sidebar__sidebar-info-user-info"
+        *ngFor="let t of teacherProfile"
+      >
+        <p class="name">{{ t.teach_name }}</p>
+        <p class="description">{{ t.user_type }}</p>
+      </div>
+    </div>
+    <!-- en caso de entrar como administrador -->
+    <div class="sidebar__sidebar-info-user" *ngIf="rolAdmin">
+      <div class="sidebar__sidebar-info-user-info">
+        <p class="name">Administrador</p>
+        <p class="description">ADMIN</p>
+      </div>
+    </div>
+    <!-- exit button -->
+    <a [routerLink]="['/map']" class="sidebar__sidebar-info-button secondary-button" (click)="logOut()">Salir de mi cuenta</a
+    >
+  </div>
+</aside>

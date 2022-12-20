@@ -1,0 +1,54 @@
+<header>
+  <app-header></app-header>
+</header>
+<div class="container text-center">
+  <div class="row mt-lg-5">
+    <!-- start image section -->
+    <div class="col-12 col-lg-6 col-right d-flex flex-column order-lg-1">
+      <figure>
+        <img src="./assets/images/Group 10.png" />
+      </figure>
+    </div>
+    <!-- end image section -->
+    <div class="col-12 col-left col-lg-6">
+      <article class="search-subject d-flex flex-column">
+        <h1 class="search-subject__title">
+          encuentra al profesor <br />que tanto <span>buscas.</span>
+        </h1>
+        <div class="search-subject__content">
+          <p class="search-subject__content-p">Selecciona una materia</p>
+
+          <select
+            class="form-select search-subject__content-form-select"
+            aria-label="Default select example"
+            [(ngModel)]="subject"
+          >
+            <option
+              *ngFor="let subject of arrSubjects"
+              value="{{ subject.subj_id }}"
+            >
+              {{ subject.subj_name }}
+            </option>
+          </select>
+          <div class="search-subject__content-input">
+            <label class="search-subject__content-input-label" for="zip"
+              >Introduce tu código postal</label
+            >
+            <input
+              type="text"
+              id="zip"
+              class="search-subject__content-input-input"
+              [(ngModel)]="zip"
+            />
+          </div>
+          <a
+            class="primary-button d-flex justify-content-center"
+            [routerLink]="['/map']"
+            (click)="guardarDatos()"
+            >Buscar</a
+          >
+        </div>
+      </article>
+    </div>
+  </div>
+</div>

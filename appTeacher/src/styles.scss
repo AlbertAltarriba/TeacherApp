@@ -1,0 +1,18 @@
+/* You can add global styles to this file, and also import other style files */
+
+/*FontAwesome*/
+@import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css");
+
+//wrapper
+@import "./assets/styles/commons/wrapper";
+
+//common styles
+@import "./assets/styles/commons/__commons-dir";
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: $background;
+}

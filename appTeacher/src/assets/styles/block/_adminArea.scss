@@ -1,0 +1,18 @@
+@import "../../../assets/styles/commons/_commons-dir";
+
+.sidebar__main {
+  .first-group-options {
+    width: 100%;
+    &-check {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+    }
+    .btn {
+      margin-right: 0.5rem;
+    }
+  }
+  .menu-admin {
+    margin-bottom: 2.5rem;
+  }
+}

@@ -1,0 +1,54 @@
+<nav class="navbar navbar-expand-md border-end">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#" [routerLink]="['/map']">
+      <img
+        src="../../../assets/images/Group 9.jpg"
+        alt="Logo"
+        width="234,48"
+        height="48"
+        class="d-inline-block align-text-top"
+      />
+    </a>
+    <!-- start toggler -->
+
+    <button
+      class="navbar-toggler"
+      [ngClass]="{ collapsed: isCollapsed }"
+      type="button"
+      (click)="toggle()"
+      data-bs-toggle="collapse"
+      data-bs-target="#nav-toggler"
+      aria-controls="nav-toggler"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div
+      class="collapse navbar-collapse"
+      [ngClass]="{ show: isCollapsed }"
+      id="nav-toggler"
+    >
+      <ul *ngIf="!token" class="navbar-nav ms-auto mb-2 mb-lg-0">
+        <li class="nav-item mb-3 mb-lg-0 me-lg-3">
+          <a class="nav-link primary-button" [routerLink]="['/form']">Crear cuenta</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link secondary-button w-md-155px d-md-flex justify-content-md-center" [routerLink]="['/login']">Entrar</a>
+        </li>
+      </ul>
+
+      <ul *ngIf="token" class="navbar-nav ms-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link primary-button my-2 my-md-0" [routerLink]="['/area/' + userType + '/' + id]">Accede a tu perfil</a>
+        </li>
+        <li class="nav-item ms-md-3">
+          <a class="nav-link secondary-button w-md-155px d-md-flex justify-content-md-center" (click)="logOut()">Salir</a>
+        </li>
+      </ul>
+    </div>
+
+    <!-- <div class="navbar-buttons"></div> -->
+    <!-- TODO -->
+  </div>
+</nav>

@@ -1,0 +1,22 @@
+INSERT INTO `appteachers`.`users` (`user_id`, `user_email`, `user_password`, `user_type`, `user_deleted`, `user_username`) 
+VALUES 
+('1', 'Estudiante1@gmail.com', '12345', 'STUDENT', 'NO', 'Student1'),
+('2', 'Estudiante2@gmail.com', '12345', 'STUDENT', 'NO', 'Student2'),
+('3', 'Estudiante3@gmail.com', '12345', 'STUDENT', 'NO', 'Student3'),
+('4', 'Estudiante4@gmail.com', '12345', 'STUDENT', 'NO', 'Student4'),
+('5', 'Estudiante5@gmail.com', '12345', 'STUDENT', 'NO', 'Student5'),
+('6', 'Estudiante6@gmail.com', '12345', 'STUDENT', 'NO', 'Student6'),
+('7', 'Estudiante7@gmail.com', '12345', 'STUDENT', 'NO', 'Student7'),
+('8', 'Estudiante8@gmail.com', '12345', 'STUDENT', 'NO', 'Student8'),
+('9', 'Estudiante9@gmail.com', '12345', 'STUDENT', 'NO', 'Student9'),
+('10', 'Estudiante10@gmail.com', '12345', 'STUDENT', 'NO', 'Student10'),
+('11', 'Teacher11@gmail.com', '12345', 'TEACHER', 'NO', 'Teacher1'),
+('12', 'Teacher12@gmail.com', '12345', 'TEACHER', 'NO', 'Teacher2'),
+('13', 'Teacher13@gmail.com', '12345', 'TEACHER', 'NO', 'Teacher3'),
+('14', 'Teacher14@gmail.com', '12345', 'TEACHER', 'NO', 'Teacher4'),
+('15', 'Teacher15@gmail.com', '12345', 'TEACHER', 'NO', 'Teacher5'),
+('16', 'Teacher16@gmail.com', '12345', 'TEACHER', 'NO', 'Teacher6'),
+('17', 'Teacher17@gmail.com', '12345', 'TEACHER', 'NO', 'Teacher7'),
+('18', 'Teacher18@gmail.com', '12345', 'TEACHER', 'NO', 'Teacher8'),
+('19', 'Teacher19@gmail.com', '12345', 'TEACHER', 'NO', 'Teacher9'),
+('20', 'Teacher20@gmail.com', '12345', 'TEACHER', 'NO', 'Teacher10');

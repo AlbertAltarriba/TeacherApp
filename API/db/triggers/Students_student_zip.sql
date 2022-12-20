@@ -1,0 +1,3 @@
+DROP TRIGGER IF EXISTS `Appteachers`.`Students_BEFORE_INSERT_ZIP`;
+CREATE DEFINER = CURRENT_USER TRIGGER `Appteachers`.`Students_BEFORE_INSERT_ZIP` BEFORE INSERT ON `Students` FOR EACH ROW
+SET NEW.student_zip = UPPER(NEW.student_zip);

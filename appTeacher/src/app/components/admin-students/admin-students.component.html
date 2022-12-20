@@ -1,0 +1,198 @@
+<div class="container-fluid">
+  <div class="row sidebar">
+    <aside
+      class="offcanvas-lg offcanvas-start col-lg-3"
+      tabindex="-1"
+      id="offcanvasResponsive"
+      aria-labelledby="offcanvasResponsiveLabel"
+    >
+      <div class="offcanvas-header justify-content-end">
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="offcanvas"
+          data-bs-target="#offcanvasResponsive"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="offcanvas-body sidebar__sidebar h-100">
+        <app-aside></app-aside>
+      </div>
+    </aside>
+
+    <!-- Main -->
+    <main class="sidebar__main col-12 col-lg">
+      <div class="sidebar__main first-row">
+        <div class="row mt-3">
+          <div class="col-10">
+            <h1>Panel del administrador: gestión de alumnos</h1>
+          </div>
+          <div class="col-2">
+            <button
+              class="btn primary-button d-lg-none"
+              type="button"
+              data-bs-toggle="offcanvas"
+              data-bs-target="#offcanvasResponsive"
+              aria-controls="offcanvasResponsive"
+            >
+              <i class="fa-solid fa-bars"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="first-row-inputs row px-3 px-md-0 mb-4">
+          <div
+            class="first-row-inputs-group col-12 mb-3 mb-md-0 me-md-3 col-md-3"
+          >
+            <span>Nombre</span>
+            <input type="text" class="input" [(ngModel)]="inputName" />
+          </div>
+          <div class="first-row-inputs-group col-12 col-md-3">
+            <span>Deleted</span>
+            <input type="text" class="input" [(ngModel)]="inputActive" />
+          </div>
+        </div>
+
+        <div class="d-flex">
+          <button
+            class="btn secondary-button width--155px me-2"
+            (click)="eraseFilterStudent()"
+          >
+            Borrar búsqueda
+          </button>
+
+          <button
+            class="btn primary-button width--155px"
+            (click)="filterStudents(inputName, inputActive)"
+          >
+            Buscar
+          </button>
+        </div>
+      </div>
+
+      <div class="sidebar__main second-row row">
+        <div class="col-12">
+          <h2>Gestionar alumnos</h2>
+        </div>
+
+        <div class="second-row-first-buttons col-12 mt-3">
+          <select
+            #select
+            [(ngModel)]="action"
+            aria-label="Default select example"
+            class="form-select secondary-button width--165px"
+          >
+            <option selected>¿Qué quieres hacer?</option>
+            <option value="alta">Dar de alta</option>
+            <option value="baja">Dar de baja</option>
+          </select>
+
+          <button
+            (click)="validateStudent(studentToValidate)"
+            class="btn primary-button width--165px"
+            data-bs-target="#popUpAlumno"
+            data-bs-toggle="modal"
+          >
+            Aplicar cambio
+          </button>
+        </div>
+
+        <div class="second-row-second col-12 overflow-scroll mt-4">
+          <table class="table">
+            <thead>
+              <tr>
+                <th class="name" scope="col">Nombre</th>
+                <th scope="col">Teléfono</th>
+                <th scope="col">Email</th>
+
+                <!-- <th scope="col">User name</th> -->
+                <th scope="col">Deleted</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- [(ngModel)]="studentToValidate" -->
+              <tr *ngFor="let student of arrStudents">
+                <td>
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    name="rol"
+                    value="{{ student.student_id }}"
+                    id="flexRadioDefault1"
+                    [(ngModel)]="studentToValidate"
+                  />{{ student.student_name }}
+                </td>
+                <td>{{ student.student_phone }}</td>
+                <td>{{ student.user_email }}</td>
+                <!-- <td>{{ student.user_username }}</td> -->
+                <td>{{ student.user_deleted }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- <div class="second-row-third col-12 d-flex flex-column">
+          <p>Showing data 1 to 8 of 256k entries</p>
+          <nav
+            class="second-row-third-nav d-flex justify-content-center"
+            aria-label="Page navigation example"
+          >
+            <ul class="pagination">
+              <li class="page-item">
+                <a class="page-link" href="#" aria-label="Previous">
+                  <span aria-hidden="true">&laquo;</span>
+                </a>
+              </li>
+              <li class="page-item"><a class="page-link" href="#">1</a></li>
+              <li class="page-item"><a class="page-link" href="#">2</a></li>
+              <li class="page-item"><a class="page-link" href="#">3</a></li>
+              <li class="page-item">
+                <a class="page-link" href="#" aria-label="Next">
+                  <span aria-hidden="true">&raquo;</span>
+                </a>
+              </li>
+            </ul>
+          </nav>
+        </div> -->
+      </div>
+    </main>
+
+    <div
+      class="modal fade"
+      id="popUp"
+      data-bs-backdrop="static"
+      aria-labelledby="popUpLabel"
+      aria-hidden="true"
+      data-bs-backdrop="false"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body row">
+            <div
+              class="modal-body__image col-12 col-md-6 d-flex justify-content-center"
+            >
+              <figure>
+                <img [src]="getModalImg" alt="" />
+              </figure>
+            </div>
+            <div class="modal-body__text col-12 col-md-6 d-flex flex-column">
+              <h2
+                [innerHTML]="getModalTitle"
+                class="modal-body__text-title mb-4"
+              ></h2>
+              <p [innerHTML]="getModalBody" class=""></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

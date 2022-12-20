@@ -1,0 +1,134 @@
+@import "../../../assets/styles/commons/_commons-dir";
+
+//mobile first
+
+.container {
+  background-color: $background;
+  min-height: calc(100vh - 93px);
+
+  .row {
+    padding: 2rem;
+    font-family: $primary-font;
+
+    .col-left {
+      .search-subject {
+        &__title {
+          text-transform: uppercase;
+          text-align: left;
+          margin-bottom: 1rem;
+
+          span {
+            color: $orange;
+            font-weight: 700;
+          }
+        }
+
+        &__content {
+          &-p {
+            text-align: left;
+            color: $black-app;
+          }
+
+          &-form-select {
+            margin-bottom: 0.5rem;
+            border: none;
+            border-radius: 0px;
+            border-bottom: 1px solid $light-grey;
+          }
+
+          &-input {
+            display: flex;
+            flex-direction: column;
+            margin: 2rem 0;
+
+            label {
+              text-align: left;
+              margin-left: 0.5rem;
+              margin-bottom: 0.5rem;
+              color: $black-app;
+            }
+
+            input {
+              padding: 0.5rem;
+              border: none;
+              border-bottom: 1px solid $light-grey;
+            }
+          }
+        }
+      }
+    }
+
+    .col-right {
+      align-items: center;
+      padding: 1rem;
+      figure {
+        img {
+          max-width: 100%;
+        }
+      }
+    }
+  }
+}
+
+.primary-button {
+  text-decoration: none;
+  border-radius: 14px;
+}
+
+//tablet breakpoint
+@media (min-width: $tablet-break) {
+  .container {
+    min-height: calc(100vh - 93px);
+
+    .row {
+      .col-left {
+        .search-subject {
+          &__title {
+            text-transform: uppercase;
+            text-align: left;
+            margin-bottom: 1rem;
+            span {
+              color: $orange;
+              font-weight: 700;
+            }
+          }
+          &__content {
+            width: 60%;
+            &-p {
+              text-align: left;
+              color: $black-app;
+            }
+            &-form-select {
+              margin-bottom: 0.5rem;
+              border: none;
+              border-radius: 0px;
+              border-bottom: 1px solid $light-grey;
+            }
+            &-input {
+              display: flex;
+              flex-direction: column;
+              margin: 2rem 0;
+
+              label {
+                text-align: left;
+                margin-left: 0.5rem;
+              }
+              input {
+                border: none;
+                border-bottom: 1px solid $light-grey;
+              }
+            }
+          }
+        }
+      }
+      .col-right {
+        justify-content: center;
+        align-items: center;
+      }
+    }
+  }
+  .primary-button {
+    text-decoration: none;
+    border-radius: 14px;
+  }
+} ;

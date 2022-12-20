@@ -1,0 +1,340 @@
+<header>
+  <app-header></app-header>
+</header>
+
+<div class="container-fluid">
+  <div class="row sidebar">
+    <aside
+      class="offcanvas-lg offcanvas-start col-lg-3"
+      tabindex="-1"
+      id="offcanvasResponsive"
+      aria-labelledby="offcanvasResponsiveLabel"
+    >
+      <div class="offcanvas-header justify-content-end">
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="offcanvas"
+          data-bs-target="#offcanvasResponsive"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="offcanvas-body sidebar__sidebar">
+        <div class="sidebar__sidebar--title">Filtrar por:</div>
+        <div class="sidebar__sidebar-filters">
+          <div class="sidebar__sidebar-filters-filter filter-subjects">
+            <div class="filter-head subjects">
+              <p>Materia</p>
+              <a (click)="viewMaterias()">
+                <img
+                  src="./../../../assets/images/Remove.svg"
+                  alt="remove filter"
+                  *ngIf="showFilterMateria"
+                />
+                <img
+                  src="./../../../assets/images/Add.svg"
+                  alt="add filter"
+                  *ngIf="!showFilterMateria"
+                />
+              </a>
+            </div>
+            <div class="filter-subjects options" *ngIf="showFilterMateria">
+              <!-- ngFor con los subjects -->
+              <div class="form-check" *ngFor="let subject of arrSubjects">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="subject"
+                  value="{{ subject.subj_id }}"
+                  id="flexCheckDefault"
+                  [(ngModel)]="inputSubject"
+                />
+                <!--ira en el value el id subject-->
+                <label class="form-check-label" for="flexCheckDefault">
+                  {{ subject.subj_name }}
+                </label>
+              </div>
+            </div>
+          </div>
+          <div class="sidebar__sidebar-filters-filter filter-valuate">
+            <div class="filter-head valuate">
+              <p>Valoración</p>
+              <a (click)="viewValoration()">
+                <img
+                  src="./../../../assets/images/Remove.svg"
+                  alt="remove filter"
+                  *ngIf="showFilterValoration"
+                />
+                <img
+                  src="./../../../assets/images/Add.svg"
+                  alt="add filter"
+                  *ngIf="!showFilterValoration"
+                />
+              </a>
+            </div>
+            <div class="filter-valuate options" *ngIf="showFilterValoration">
+              <!-- ngFor con las valoraciones -->
+              <div class="form-check" *ngFor="let assesment of arrAssessments">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="valoration"
+                  value="{{ assesment }}"
+                  id="flexCheckDefault"
+                  [(ngModel)]="inputValoration"
+                />
+                <label class="form-check-label" for="flexCheckDefault">
+                  {{ assesment }} estrellas
+                </label>
+              </div>
+            </div>
+          </div>
+          <!-- filter experience -->
+          <div class="sidebar__sidebar-filters-filter filter-experience">
+            <div class="filter-head experience">
+              <p>Experiencia</p>
+              <a (click)="viewExperience()">
+                <img
+                  src="./../../../assets/images/Remove.svg"
+                  alt="remove filter"
+                  *ngIf="showFilterExperience"
+                />
+                <img
+                  src="./../../../assets/images/Add.svg"
+                  alt="add filter"
+                  *ngIf="!showFilterExperience"
+                />
+              </a>
+            </div>
+            <div class="filter-experience options" *ngIf="showFilterExperience">
+              <!-- ngFor con la experience -->
+              <div class="form-check" *ngFor="let experience of arrExperiences">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="experience"
+                  value="{{ experience }}"
+                  id="flexCheckDefault"
+                  [(ngModel)]="inputExperience"
+                />
+                <label class="form-check-label" for="flexCheckDefault">
+                  {{ experience }} años
+                </label>
+              </div>
+            </div>
+          </div>
+          <!-- filter prices -->
+          <div class="sidebar__sidebar-filters-filter filter-experience">
+            <div class="filter-head experience">
+              <p>Precios</p>
+              <a (click)="viewPrices()">
+                <img
+                  src="./../../../assets/images/Remove.svg"
+                  alt="remove filter"
+                  *ngIf="showFilterPrices"
+                />
+                <img
+                  src="./../../../assets/images/Add.svg"
+                  alt="add filter"
+                  *ngIf="!showFilterPrices"
+                />
+              </a>
+            </div>
+            <div class="filter-experience options" *ngIf="showFilterPrices">
+              <!-- ngFor con los prices -->
+              <div class="form-check" *ngFor="let price of arrPrices">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="price"
+                  value="{{ price }}"
+                  id="flexCheckDefault"
+                  [(ngModel)]="inputPrice"
+                />
+                <label class="form-check-label" for="flexCheckDefault">
+                  {{ price }} €/hora
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="sidebar__sidebar-button">
+          <button
+            class="primary-button"
+            (click)="
+              teacherFilter(
+                inputSubject,
+                inputValoration,
+                inputExperience,
+                inputPrice
+              )
+            "
+          >
+            Aplicar Cambios
+          </button>
+          <button class="secondary-button" (click)="eraseFilterTeachers()">
+            Borrar filtro
+          </button>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Parte del mapa -->
+    <main class="sidebar__main col-12 col-lg">
+      <div class="row map">
+        <agm-map [latitude]="lat" [longitude]="lng" [zoom]="zoom">
+          <!-- Current user position -->
+          <agm-marker
+            [latitude]="lat"
+            [longitude]="lng"
+            [iconUrl]="$any({ url: '/assets/images/map/Position.png' })"
+          >
+          </agm-marker>
+          <agm-marker
+            *ngFor="let c of coordenadas"
+            [latitude]="c.latitude"
+            [longitude]="c.longitude"
+            [iconUrl]="
+              $any({
+                url: '/assets/images/map/marcadorGPS.png',
+                scaledSize: { width: 50, height: 50 }
+              })
+            "
+          >
+            <agm-info-window>
+              <h5 class="agm-info-title">{{ c.teacherName }}</h5>
+              <p>
+                <span class="agm-info-span">Asignatura: </span>
+                {{ findSubject(c.teacherIdSubject) }}
+              </p>
+              <p>
+                <span class="agm-info-span">Experiencia: </span
+                >{{ c.teacherExperience }} años
+              </p>
+              <p>
+                <span class="agm-info-span">Precio hora: </span>
+                {{ c.teacherPrice }} €
+              </p>
+            </agm-info-window>
+          </agm-marker>
+        </agm-map>
+      </div>
+      <button
+        class="btn primary-button d-lg-none w-100 mb-3"
+        type="button"
+        data-bs-toggle="offcanvas"
+        data-bs-target="#offcanvasResponsive"
+        aria-controls="offcanvasResponsive"
+      >
+        Mostrar filtros
+      </button>
+
+      <div class="row cards">
+        <p>Listado de profesores</p>
+
+        <!-- ngFor con las cards de los profesores -->
+        <div class="articles-card">
+          <div class="row">
+            <div
+              class="col-12 col-md-3 mb-2"
+              *ngFor="let teacher of arrTeachers"
+            >
+              <article class="card">
+                <div class="card-starts">
+                  <p>
+                    Puntuación: <br />
+                    {{ getTeacherAverage(teacher.teach_id) }} ★
+                  </p>
+
+                  <!--                  
+                <li class="start-image">
+                  <img src="../../../assets/images/fillStar.svg" alt="star" />
+                </li>
+                <li class="start-image">
+                  <img src="../../../assets/images/fillStar.svg" alt="star" />
+                </li>
+                <li class="start-image">
+                  <img src="../../../assets/images/fillStar.svg" alt="star" />
+                </li>
+                <li class="start-image">
+                  <img src="../../../assets/images/star.svg" alt="star" />
+                </li>
+                <li class="start-image">
+                  <img src="../../../assets/images/star.svg" alt="star" />
+                </li>
+              -->
+                </div>
+                <div class="card-image">
+                  <!-- <img class="rounded-circle"
+                    src="../../../assets/images/Avatar teacher.svg"
+                    alt="teacher avatar"
+                  /> -->
+                  <img [src]="'http://localhost:3000/images/' + teacher?.teach_image " alt="teacher image" class="rounded-circle">
+                </div>
+                <div class="card-content">
+                  <h1>{{ teacher?.teach_name }}</h1>
+                  <div class="card-content-data">
+                    <p>{{ findSubject(teacher.teach_id_subject) }}</p>
+                    <p>{{ teacher?.teach_city }}</p>
+                    <p>
+                      {{ teacher?.teach_experience_years }} años de experiencia
+                    </p>
+                  </div>
+                </div>
+                <div *ngIf="!token" class="button">
+                  <a class="btn primary-button" data-bs-toggle="modal" data-bs-target="#popUp">Ver perfil</a>
+                </div>
+              </article>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="d-flex flex-column align-items-center">
+        <!-- <p>Showing data 1 to 8 of 256k entries</p> -->
+        <nav class="second-row-third-nav" aria-label="Page navigation example">
+          <ul class="pagination">
+            <li class="page-item">
+              <a
+                class="page-link"
+                aria-label="Previous"
+                (click)="previousPagination()"
+              >
+                <span aria-hidden="true">&laquo;</span>
+              </a>
+            </li>
+            <span class="page-link"> {{ currentPage }}</span>
+            <li class="page-item">
+              <a class="page-link" aria-label="Next" (click)="nextPagination()">
+                <span aria-hidden="true">&raquo;</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </main>
+  </div>
+  <div class="modal fade" id="popUp" data-bs-backdrop="static" aria-labelledby="popUpLabel" aria-hidden="true" data-bs-backdrop="false">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body ">
+          <div class="modal-body__image ps-md-4 me-md-4 mb-3 mb-md-0">
+            <figure>
+              <img src="assets/images/PopUp/PopUpError.png" alt="Imagen de error" />
+            </figure>
+          </div>
+          <div class="modal-body__text">
+            <h2 class="col-12 col-md-6 modal-body__text-title mb-5"> No es posible acceder</h2>
+            <p class="modal-body__text-content">Regístrate o introduce tus credenciales para continuar</p>
+            <div class="modal-btn-container">
+              <button type="button" class="primary-button btn-popup me-4" [routerLink]="'/form'" aria-label="Close">Regístrate</button>
+              <button type="button" class="primary-button btn-popup" [routerLink]="'/login'" aria-label="Close">Inicia sesión</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

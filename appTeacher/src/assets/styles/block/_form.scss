@@ -1,0 +1,214 @@
+@import "../../../assets/styles/commons/variables";
+@import "../../../assets/styles/commons/buttons";
+@import "../../../assets/styles/commons/utilities";
+
+.container-w{
+  display: flex;
+  flex-direction: column;
+}
+.section-form{
+  flex-basis: 90%;
+}
+.form {
+  color: $dark-grey;
+  font-family: $primary-font;
+  font-size: 0.875rem;
+
+  &_img{
+    max-width: 100%;
+    height: auto;
+  }
+  &-header {
+    &-title {
+      font-family: $title-font;
+      font-weight: 500;
+      font-size: 1.5rem;
+    }
+    &-subtitle {
+      font-family: $title-font;
+      text-transform: uppercase;
+      color: $orange;
+      font-weight: 700;
+      font-size: 2rem;
+    }
+
+    &-text span {
+      font-weight: 700;
+      font-size: 1.25rem;
+    }
+  }
+
+  &-body {
+    &__radio label {
+      font-family: $title-font;
+      font-size: 1rem;
+      font-weight: 500;
+      text-transform: uppercase;
+    }
+
+    &__title {
+      font-weight: 700;
+      font-size: 1.25rem;
+    }
+
+    &__select {
+      border: none;
+      border-radius: 0px;
+      border-bottom: 1px solid $dark-grey;
+      background-color: white;
+
+      label {
+        font-size: 0.75rem;
+        padding-left: 0.5625rem;
+      }
+
+      select {
+        color: $black-app;
+        background-color: white;
+        margin-top: -10px;
+        border: 0px;
+      }
+    }
+
+    &__textarea {
+      /* flex-basis: 64%; */
+
+      & textarea {
+        height: 250px;
+      }
+    }
+
+    &__section-title {
+      color: $brown;
+      font-size: 1.125rem;
+    }
+
+    &__small-text {
+      font-size: 0.75rem;
+    }
+
+    .input {
+      font-size: 0.875rem;
+      color: $dark-grey;
+    }
+
+    .option {
+      font-family: $primary-font, sans-serif;
+      font-size: 0.875rem;
+      color: $dark-grey;
+    }
+
+    a {
+      text-decoration: none;
+      color: $orange;
+      font-weight: 700;
+    }
+
+    span {
+      color: $orange;
+      font-weight: 700;
+    }
+  }
+
+  .form {
+    &-check-input {
+      width: 1.5em;
+      height: 1.5em;
+      margin-top: 0;
+      margin-right: 0.5rem;
+
+      &:checked {
+        background-color: white;
+        border: 0;
+        box-shadow: none;
+        background: url("../../images/Radiobutton_Selected.png") center repeat;
+      }
+      &:active {
+        box-shadow: none;
+      }
+      &[type="checkbox"] {
+        width: 2.5em;
+        height: 2.5em;
+        margin-top: -0.25rem;
+        border: 1px solid $dark-grey;
+
+        &:checked {
+          background: url("../../images/Checkbox_Big_Selected.png") center;
+        }
+      }
+    }
+
+    &-select {
+      background-image: url("../../images/Down.png");
+
+      &:focus {
+        box-shadow: none;
+      }
+    }
+  }
+}
+.btnModal {
+  display: block;
+  text-decoration: none;
+  text-align: center;
+}
+
+.primary-button {
+  width: 100%;
+  border-radius: 14px;
+}
+
+.primary-button.sidebar-toggler {
+  width: auto;
+}
+
+input.ng-touched.ng-invalid {
+  border-bottom: 2px solid $error-line;
+  background: url(../../images/alert_danger-1.svg) no-repeat right center;
+  background-color: white;
+  background-origin: content-box;
+}
+input[type="checkbox"].ng-touched.ng-invalid {
+  background: none;
+}
+
+.error {
+  color: $error-text;
+  font-size: 0.75rem;
+  margin-left: 1rem;
+}
+
+input[type="file"] {
+  padding: 0;
+}
+
+input[type="file"]::file-selector-button {
+  color: white;
+  background-color: $orange;
+  padding: 1.375rem;
+  padding-left: 2rem;
+}
+
+.form-control:hover:not(:disabled):not([readonly])::file-selector-button {
+  color: #ff861a;
+  background-color: $white;
+  border-color: $orange;
+}
+
+
+@media (min-width: 768px) {
+  .container-w{
+    display: flex;
+    flex-direction: row;
+  }
+  .section-form{
+    flex-basis: 50%;
+  }
+  .section-form-profile{
+    flex-basis: 100%;
+  }
+  .form-image{
+    flex-basis: 50%;
+  }
+}
+

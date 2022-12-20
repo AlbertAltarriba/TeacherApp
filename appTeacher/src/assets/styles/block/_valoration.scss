@@ -1,0 +1,92 @@
+.sidebar {
+  display: flex;
+  height: 100vh;
+  position: absolute;
+  
+  &__main {
+    padding: 2rem;
+    .first-row {
+      h1 {
+        font-size: 1.4rem;
+        font-family: $primary-font;
+        color: $dark-grey;
+        font-weight: 600;
+      }
+    }
+    .second-row {
+      padding: 2.25rem;
+      background-color: $white;
+      border-radius: 14px;
+      .table {
+        thead {
+          .name {
+            text-indent: 2rem;
+          }
+        }
+        tbody {
+          td {
+            padding: 0.75rem;
+          }
+          input {
+            margin-right: 1rem;
+          }
+        }
+      }
+    }
+
+    .show {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background-color: rgba($orange, 0.5);
+      align-items: center;
+      justify-content: center;
+      .popup-container {
+        background-color: $white;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0rem 1.5rem 0.25rem 1.5rem;
+
+        .popup-image {
+          max-width: 100%;
+        }
+        .popup-content {
+          margin: 2rem;
+          display: flex;
+          flex-direction: column;
+          &-close {
+            display: flex;
+            justify-content: flex-end;
+          }
+          &-title {
+            font-size: 1.5rem;
+            margin: 1rem 0;
+            color: $orange;
+          }
+          &-stars {
+            margin-bottom: 1rem;
+            a {
+              margin: 0.25rem;
+            }
+          }
+          &-textarea {
+            margin-bottom: 1.5rem;
+          }
+          &-btn {
+            width: 50%;
+            align-self: flex-start;
+            border-radius: 14px;
+          }
+        }
+      }
+    }
+  }
+  .form-check-input:checked {
+    background-color: white;
+    border: 0;
+    box-shadow: none;
+    background: url("../../images/Radiobutton_Selected.png") center repeat;
+  }
+}

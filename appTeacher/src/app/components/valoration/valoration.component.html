@@ -1,0 +1,170 @@
+<div class="container-fluid">
+  <div class="row sidebar">
+    <!-- Sidebar -->
+    <aside
+      class="offcanvas-lg offcanvas-start col-lg-3"
+      tabindex="-1"
+      id="offcanvasResponsive"
+      aria-labelledby="offcanvasResponsiveLabel"
+    >
+      <div class="offcanvas-header justify-content-end">
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="offcanvas"
+          data-bs-target="#offcanvasResponsive"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="offcanvas-body sidebar__sidebar h-100">
+        <app-aside></app-aside>
+      </div>
+    </aside>
+
+    <!-- Main -->
+    <div class="sidebar__main col-12 col-lg">
+      <div class="sidebar__main first-row">
+        <div class="row my-4">
+          <div class="col-10 d-flex align-items-center">
+            <h1>Selecciona el profesor y puntúa</h1>
+          </div>
+          <div class="col-2">
+            <button
+              class="btn primary-button d-lg-none"
+              type="button"
+              data-bs-toggle="offcanvas"
+              data-bs-target="#offcanvasResponsive"
+              aria-controls="offcanvasResponsive"
+            >
+              <i class="fa-solid fa-bars"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="second-row overflow-scroll">
+        <!-- tabla puntua profesor -->
+        <table class="table">
+          <thead>
+            <tr>
+              <th class="name" scope="col">Profesor</th>
+              <th scope="col">Materia</th>
+              <th scope="col">Valoración</th>
+              <th scope="col">Experiencia</th>
+              <th scope="col">Comentarios</th>
+              <th scope="col">Código postal</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- TODO -->
+            <!-- ngfor con cada alumno -->
+            <tr *ngFor="let e of studentEnrolls">
+              <td>
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="flexRadioDefault"
+                  value="{{ e.enroll_id }}"
+                  id="flexRadioDefault1"
+                  [(ngModel)]="enrollToUpdate"
+                />{{ findTeacherEnrollName(e.enroll_id_teacher) }}
+              </td>
+              <td>{{ findTeacherEnrollSubject(e.enroll_id_teacher) }}</td>
+              <td>{{ e.enroll_assessment }}</td>
+              <td>{{ teacherExperience }} años</td>
+              <td>{{ e.enroll_comments }}</td>
+              <td>{{ teacherZip }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="d-flex mt-4">
+        <button
+          class="btn primary-button width--155px"
+          [disabled]="enrollToUpdate == 0"
+          (click)="openModal()"
+        >
+          Hacer valoración
+        </button>
+      </div>
+
+      <!-- popup -->
+      <div class="show" [ngClass]="{ popup: activo }">
+        <div class="popup-container">
+          <div class="popup-image">
+            <img src="./assets/images/popUpImage.svg" />
+          </div>
+          <div class="popup-content">
+            <div class="popup-content-close">
+              <a (click)="close()" class="closer"
+                ><img src="./assets/images/Clear.svg"
+              /></a>
+            </div>
+            <h2 class="popup-content-title">Valora a tu profesor</h2>
+
+            <div class="stars-div">
+              <form>
+                <p class="clasificacion">
+                  <input
+                    id="radio1"
+                    type="radio"
+                    name="estrellas"
+                    value="5"
+                    (click)="rating($event)"
+                  />
+                  <label for="radio1">★</label>
+                  <input
+                    id="radio2"
+                    type="radio"
+                    name="estrellas"
+                    value="4"
+                    (click)="rating($event)"
+                  />
+                  <label for="radio2">★</label>
+                  <input
+                    id="radio3"
+                    type="radio"
+                    name="estrellas"
+                    value="3"
+                    (click)="rating($event)"
+                  />
+                  <label for="radio3">★</label>
+                  <input
+                    id="radio4"
+                    type="radio"
+                    name="estrellas"
+                    value="2"
+                    (click)="rating($event)"
+                  />
+                  <label for="radio4">★</label>
+                  <input
+                    id="radio5"
+                    type="radio"
+                    name="estrellas"
+                    value="1"
+                    (click)="rating($event)"
+                  />
+                  <label for="radio5">★</label>
+                </p>
+              </form>
+            </div>
+            <textarea
+              class="popup-content-textarea"
+              rows="8"
+              cols="50"
+              placeholder="Quiero escribir una reseña"
+              [(ngModel)]="comment"
+            ></textarea>
+            <button
+              class="popup-content-btn primary-button"
+              (click)="valorateTeacher()"
+            >
+              Valorar
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

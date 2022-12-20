@@ -1,0 +1,57 @@
+@import "../../../assets/styles/commons/_variables";
+@import "../../../assets/styles/commons/_buttons";
+@import "../../../assets/styles/block/_valoration";
+
+// pop up
+.show {
+   display: none;
+   position: absolute;
+}
+
+.popup {
+  display: flex;
+
+  position: relative;
+  padding: 2rem;
+  top: -100px;
+  text-align: left;
+  background-color: $white;
+  &-image {
+    img {
+      max-width: 100%;
+      // border:1px solid red;
+    }
+  }
+}
+popup-content-stars {
+  input {
+    &:checked {
+      src: "./assets/images/fillStar.svg";
+    }
+  }
+}
+
+.stars-div {
+  label {
+    font-size: 2rem;
+    color: $dark-grey;
+  }
+  label:hover {
+    color: $orange;
+  }
+  label:hover ~ label {
+    color: $orange;
+  }
+  input[type="radio"] {
+    display: none;
+  }
+  input[type="radio"]:checked ~ label {
+    color: $orange;
+  }
+}
+.clasificacion {
+  direction: rtl;
+  /* right to left */
+  unicode-bidi: bidi-override;
+  /* bidi de bidireccional */
+}

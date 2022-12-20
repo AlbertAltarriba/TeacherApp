@@ -1,0 +1,32 @@
+
+@import '../../../assets/styles/commons/__commons-dir';
+//mobile first
+
+.navbar {
+    background-color: $white;
+    border: 1px solid $light-grey;
+    padding: 1rem;
+    .container-fluid{
+
+        .navbar-buttons {
+            display: none;
+        } 
+    }
+}
+
+//tablet breakpoint
+
+@media(min-width:$tablet-break) {
+    .navbar{
+      .container-fluid{
+
+          .navbar-buttons{
+              display: flex;
+              a{
+                  text-decoration: none;
+                  margin: 0 13.5px;
+                }
+          }     
+      }
+    }
+}
